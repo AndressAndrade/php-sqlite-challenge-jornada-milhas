@@ -1,7 +1,12 @@
 {
     "autoload": {
         "psr-4": {
-            "Alura\\Mvc\\": "src/"
+            "jornada\\mvc\\": "src/"
         }
+    },
+    "require": {
+        "php": ">=8.2",
+        "ext-PDO": "*",
+        "ext-json": "*"
     }
 }
