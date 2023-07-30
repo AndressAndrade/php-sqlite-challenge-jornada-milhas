@@ -12,6 +12,17 @@ $pdo = new PDO("sqlite:$dbPath");
 $depoimentoRepository = new DepoimentoRepository($pdo);
 $depoimentoController = new DepoimentoController($depoimentoRepository);
 
-if ($_SERVER['PATH_INFO'] === '/depoimentos' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+$rota = $_SERVER['PATH_INFO'];
+$metodo = $_SERVER['REQUEST_METHOD'];
+
+if ($rota === '/depoimentos' && $metodo === 'GET') {
 	$depoimentoController->list();
+} else if ($rota === '/depoimento' && $metodo === 'GET') {
+	$depoimentoController->get();
+} else if ($rota === '/depoimento' && $metodo === 'POST') {
+	$depoimentoController->create();
+} else if ($rota === '/depoimento' && $metodo === 'PUT') {
+	$depoimentoController->edit();
+} else if ($rota === '/depoimento' && $metodo === 'DELETE') {
+	$depoimentoController->exclude();
 }

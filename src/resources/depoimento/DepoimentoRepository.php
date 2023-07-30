@@ -16,9 +16,9 @@ class DepoimentoRepository
 	{
 		$sql = 'INSERT INTO depoimentos (foto, mensagem, autor) VALUES (?, ?, ?)';
 		$statement = $this->pdo->prepare($sql);
-		$statement->bindValue(1, $depoimento['foto']);
-		$statement->bindValue(2, $depoimento['mensagem']);
-		$statement->bindValue(3, $depoimento['autor']);
+		$statement->bindValue(1, $depoimento->foto);
+		$statement->bindValue(2, $depoimento->mensagem);
+		$statement->bindValue(3, $depoimento->autor);
 
 		$result = $statement->execute();
 		$id = $this->pdo->lastInsertId();
@@ -41,14 +41,14 @@ class DepoimentoRepository
 	{
 		$sql = "UPDATE depoimentos SET
                   foto = :foto,
-                  mensagem = :mensagem
+                  mensagem = :mensagem,
 				  autor = :autor
               WHERE id = :id;";
 		$statement = $this->pdo->prepare($sql);
 
-		$statement->bindValue(':foto', $depoimento['foto']);
-		$statement->bindValue(':mensagem', $depoimento['mensagem']);
-		$statement->bindValue(':autor', $depoimento['autor']);
+		$statement->bindValue(':foto', $depoimento->foto);
+		$statement->bindValue(':mensagem', $depoimento->mensagem);
+		$statement->bindValue(':autor', $depoimento->autor);
 		$statement->bindValue(':id', $depoimento->id, PDO::PARAM_INT);
 
 		return $statement->execute();
@@ -73,8 +73,13 @@ class DepoimentoRepository
 		$statement = $this->pdo->prepare('SELECT * FROM depoimentos WHERE id = ?;');
 		$statement->bindValue(1, $id, PDO::PARAM_INT);
 		$statement->execute();
+		$depoimento = $statement->fetch(PDO::FETCH_ASSOC);
 
-		return $this->hydrateDepoimento($statement->fetch(PDO::FETCH_ASSOC));
+		if (!$depoimento) {
+			return $depoimento;
+		}
+
+		return $this->hydrateDepoimento($depoimento);
 	}
 
 	private function hydrateDepoimento(array $depoimento): Depoimento
