@@ -17,6 +17,8 @@ $metodo = $_SERVER['REQUEST_METHOD'];
 
 if ($rota === '/depoimentos' && $metodo === 'GET') {
 	$depoimentoController->list();
+} else if ($rota === '/depoimentos-home' && $metodo === 'GET') {
+	$depoimentoController->home();
 } else if ($rota === '/depoimento' && $metodo === 'GET') {
 	$depoimentoController->get();
 } else if ($rota === '/depoimento' && $metodo === 'POST') {

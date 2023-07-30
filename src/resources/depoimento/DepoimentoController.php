@@ -8,6 +8,19 @@ class DepoimentoController
 	{
 	}
 
+	public function home(): void
+	{
+		header('Content-Type: application/json');
+		$depoimentoList =  array_map(function (Depoimento $depoimento): array {
+			return [
+				'foto' => $depoimento->foto,
+				'mensagem' => $depoimento->mensagem,
+				'autor' => $depoimento->autor,
+			];
+		}, $this->depoimentoRepository->last3());
+		echo json_encode($depoimentoList);
+	}
+
 	public function get(): void
 	{
 		header('Content-Type: application/json');

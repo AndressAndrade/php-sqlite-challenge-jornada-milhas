@@ -68,6 +68,20 @@ class DepoimentoRepository
 		);
 	}
 
+	/**
+	 * @return Depoimento[]
+	 */
+	public function last3()
+	{
+		$depoimentoList = $this->pdo
+			->query('SELECT * from depoimentos ORDER BY id DESC LIMIT 3;')
+			->fetchAll(PDO::FETCH_ASSOC);
+		return array_map(
+			$this->hydrateDepoimento(...),
+			$depoimentoList
+		);
+	}
+
 	public function find(int $id)
 	{
 		$statement = $this->pdo->prepare('SELECT * FROM depoimentos WHERE id = ?;');
