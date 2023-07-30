@@ -2,9 +2,17 @@
 
 declare(strict_types=1);
 
-namespace jornada\mvc\db;
+$dbPath = __DIR__ . '/banco.sqlite';
+$pdo = new PDO("sqlite:$dbPath");
 
-$pdo = Connection::get();
+$pdo->exec('CREATE TABLE destinos (id INTEGER PRIMARY KEY, foto TEXT, nome TEXT, preco FLOAT);');
+
+$sql = 'INSERT INTO destinos (foto, nome, preco) VALUES (?,?,?);';
+$statement = $pdo->prepare($sql);
+$statement->bindValue(1, "http://google.com.br");
+$statement->bindValue(2, "Japão");
+$statement->bindValue(3, 3500.95);
+$statement->execute();
 
 $pdo->exec('CREATE TABLE depoimentos (id INTEGER PRIMARY KEY, foto TEXT, mensagem TEXT, autor TEXT);');
 
