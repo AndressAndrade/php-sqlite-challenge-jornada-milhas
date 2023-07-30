@@ -1,7 +1,10 @@
 <?php
 
-$dbPath = __DIR__ . '/banco.sqlite';
-$pdo = new PDO("sqlite:$dbPath");
+declare(strict_types=1);
+
+namespace jornada\mvc\db;
+
+$pdo = Connection::get();
 
 $pdo->exec('CREATE TABLE depoimentos (id INTEGER PRIMARY KEY, foto TEXT, mensagem TEXT, autor TEXT);');
 
