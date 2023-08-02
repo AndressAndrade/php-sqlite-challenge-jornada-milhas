@@ -57,11 +57,17 @@ class DestinoRepository
 	/**
 	 * @return Destino[]
 	 */
-	public function findDestinos($name): array
+	public function listDestinos($name = false): array
 	{
-		$destinoList = $this->pdo
-			->query("SELECT * from destinos WHERE nome LIKE '%$name%';")
-			->fetchAll(PDO::FETCH_ASSOC);
+		if (!$name) {
+			$destinoList = $this->pdo
+				->query("SELECT * from destinos;")
+				->fetchAll(PDO::FETCH_ASSOC);
+		} else {
+			$destinoList = $this->pdo
+				->query("SELECT * from destinos WHERE nome LIKE '%$name%';")
+				->fetchAll(PDO::FETCH_ASSOC);
+		}
 		if (count($destinoList) === 0) {
 			return [];
 		}

@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use jornada\mvc\resources\depoimento\{DepoimentoRepository, DepoimentoController};
-use jornada\mvc\resources\destino\{DestinoRepository, DestinoController};
-use jornada\mvc\db\Connection;
+use \jornada\mvc\resources\depoimento\{DepoimentoRepository, DepoimentoController};
+use \jornada\mvc\resources\destino\{DestinoRepository, DestinoController};
+use \jornada\mvc\db\Connection;
 
-$rota = $_SERVER['PATH_INFO'];
+$rota = $_SERVER['PATH_INFO'] ?? '/';
 $metodo = $_SERVER['REQUEST_METHOD'];
 
-if ($rota === null) {
-	http_response_code(404);
-} else if (str_contains($rota, 'depoimento')) {
+if (str_contains($rota, 'depoimento')) {
 	$depoimentoRepository = new DepoimentoRepository(Connection::get());
 	$depoimentoController = new DepoimentoController($depoimentoRepository);
 

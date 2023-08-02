@@ -12,13 +12,7 @@ class DestinoController
 	{
 		header('Content-Type: application/json');
 		$destinoContain = filter_input(INPUT_GET, 'nome');
-		if ($destinoContain === null) {
-			echo json_encode([
-				'mensagem' => 'Nenhum destino foi encontrado'
-			]);
-			return;
-		}
-		$destinoList =  $this->destinoRepository->findDestinos($destinoContain);
+		$destinoList =  $this->destinoRepository->listDestinos($destinoContain);
 		if (count($destinoList) === 0) {
 			echo json_encode([
 				'mensagem' => 'Nenhum destino foi encontrado'
